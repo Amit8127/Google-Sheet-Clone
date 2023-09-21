@@ -81,7 +81,7 @@ function focusHandler(cell) {
     // }
     buttonHighlighter(boldBtn, 'fontWeight', 'bold');
     buttonHighlighter(itBtn, 'fontStyle', 'italic');
-    buttonHighlighter(itBtn, 'textDecoration', 'underline');
+    buttonHighlighter(udBtn, 'textDecoration', 'underline');
 
 
     setHeaderColor(cell.id[0], cell.id.substring(1), "yellow");
