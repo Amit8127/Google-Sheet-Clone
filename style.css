@@ -1,18 +1,134 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+header {
+    height: 18vh;
+    overflow: hidden;
+}
+body {
+    background-color: aliceblue;
+    overflow: hidden;
+}
+
+.topbar > *:hover {
+    cursor: pointer;
+}
+.page-actions-cont {
+    height: 3rem;
+    background-color: #218c74;
+    display: flex;
+    align-items: flex-end;
+    padding-left: 1rem;
+}
+
+.page-action{
+    width: 3.5rem;
+    height: 2rem;
+    text-align: center;
+    color: #f1f2f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selected-page-action{
+    background-color: #f1f2f6;
+    color: #218c74;
+}
+
+.formula {
+    margin: 0 15px;
+    background-color: white;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.formula p {
+    text-align: center;
+}
+
+.formula span {
+    background-color: aliceblue;
+    padding: 3px 10px;
+}
+
+.formula input {
+    width: 100%;
+    border: none;
+}
+
+.formula input:focus {
+    outline: none;
+}
+
+#current-cell {
+    min-width: 100px;
+}
+
+.container {
+    height: 75vh;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+#button-container {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+#add-sheet-btn {
+    width: 50px;
+    height: 30px;
+    border: none;
+    background-color: aliceblue;
+}
+
+.sheetNo {
+    width: 50px;
+    height: 30px;
+    border: none;
+    margin-right: 5px;
+    background-color: aliceblue;
+}
+
+#my-table {
+    background-color: white;
+}
 table {
     border-collapse: collapse;
 }
 
-th, td {
-    border: 1px solid #333;
+th,
+td {
     min-width: 80px;
-
+    border: 1px solid #333;
 }
 
 td {
     outline: none;
 }
 
-button {
-    background-color: transparent;
-    border: 1px solid #333;
+.topbar {
+    display: flex;
+    gap: 15px;
+    margin: 15px;
+}
+
+.color-prop {
+    position: relative;
+}
+
+.color-prop > input {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
 }

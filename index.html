@@ -1,55 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excel-Clone</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div>
-        <h1 id="curr-cell">no</h1>
-        <button id="bold-btn">B</button>
-        <button id="it-btn">/</button>
-        <button id="ud-btn">U</button>
-        <button id="left-btn">Left</button>
-        <button id="center-btn">Center</button>
-        <button id="right-btn">Right</button>
-        <select name="Fonts" id="font-style">
-            <option value="serif">Serif</option>
-            <option value="sans-serif">Sans Serif</option>
-            <option value="monospace">Monospace</option>
-            <option value="cursive">Cursive</option>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Google Sheets</title>
+    <link rel="shortcut icon" type="image/x-icon" href="./logo.ico" />
+    <link
+      rel="shortcut icon"
+      href="https://ssl.gstatic.com/docs/spreadsheets/spreadsheets_2023q4.ico"
+      type="image/x-icon"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <header>
+      <div class="page-actions-cont">
+        <div class="page-action">File</div>
+        <div class="page-action selected-page-action">Home</div>
+        <div class="page-action">Insert</div>
+        <div class="page-action">Layout</div>
+        <div class="page-action">Help</div>
+      </div>
+
+      <!-- table -->
+      <div class="topbar">
+        <span class="material-icons copy" id="copy-btn"> content_copy </span>
+        <span class="material-icons cut" id="cut-btn"> content_cut </span>
+        <span class="material-icons paste" id="paste-btn"> content_paste </span>
+        <select id="font-style-dropdown">
+          <option value="serif">Serif</option>
+          <option value="sans-serif">Sans Serif</option>
+          <option value="monospace">monospace</option>
+          <option value="cursive">Cursive</option>
+        </select>
+        <select id="font-size-dropdown">
+          <option value="10px" contenteditable="true">10</option>
+          <option value="12px">12</option>
+          <option value="14px">14</option>
+          <option value="16px">16</option>
+          <option value="18px">18</option>
+          <option value="20px">20</option>
+          <option value="22px">22</option>
+          <option value="24px">24</option>
+          <option value="26px">26</option>
+          <option value="28px">28</option>
+          <option value="30px">30</option>
         </select>
 
-        <select name="Fonts" id="font-size">
-            <option value="10px">10</option>
-            <option value="12px">12</option>
-            <option value="14px">14</option>
-            <option value="16px">16</option>
-            <option value="18px">18</option>
-        </select>
+        <span class="material-icons bold" id="bold-btn"> format_bold </span>
+        <span class="material-icons italic" id="italics-btn">
+          format_italic
+        </span>
+        <span class="material-icons underline" id="underline-btn">
+          format_underlined
+        </span>
+        <span class="left material-icons alignment" id="left-btn">
+          format_align_left
+        </span>
+        <span class="center material-icons alignment" id="center-btn">
+          format_align_center
+        </span>
+        <span class="right material-icons alignment" id="right-btn">
+          format_align_right
+        </span>
 
-        <label for="bgColor">Bg color</label>
-        <input type="color" id="bgColor"/>
+        <div class="color-prop">
+          <span class="material-icons"> format_color_text </span>
+          <input type="color" class="font-color-prop" id="fontColor" />
+        </div>
+        <div class="color-prop">
+          <span class="material-icons"> format_color_fill </span>
+          <input type="color" class="BGcolor-prop" id="bgColor" />
+        </div>
+        <span class="material-icons download" onclick="downloadMatrix()">
+          cloud_download
+        </span>
+        <input id="upload-input" type="file" accept=".json" />
 
-        <label for="fontColor">font color</label>
-        <input type="color" id="fontColor"/>
-    </div>
-    <br>
-    <table id="table">
+      </div>
+      <div class="formula">
+        <p id="current-cell">A1</p>
+        <span>fx</span>
+        <input type="text" name="fx" />
+      </div>
+    </header>
+    <br />
+    <div class="container">
+      <table id="my-table">
         <thead>
-            <tr id="head-row">
-                <th></th>
-            </tr>
+          <tr id="table-heading-row">
+            <th></th>
+            <!-- <th>A</th>
+                      <th>B</th>
+                      <th>C</th> -->
+          </tr>
         </thead>
         <tbody id="table-body">
-            <!-- <tr>
-                <th>1</th>
-            </tr> -->
+          <!-- <tr>
+                      <th>1</th>
+                      <td></td>
+                  </tr>
+                  <tr>
+                      <th>2</th>
+                  </tr> -->
         </tbody>
-    </table>
-
+      </table>
+    </div>
+    <div id="button-container">
+      <button id="add-sheet-btn"><span class="material-icons"> post_add </span></button>
+      <button class="sheetNo" id="sheet-1" onclick="viewSheet(event)">Sheet 1</button>
+    </div>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
