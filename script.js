@@ -5,14 +5,14 @@ const ROWS = 100;
 // constants
 const transparent = "transparent";
 const transparentBlue = "#ddddff";
-const arrMatrix = 'arrMatrix';
+const arrMatrix = "arrMatrix";
 
 // table components
 const tHeadRow = document.getElementById("table-heading-row");
 const tBody = document.getElementById("table-body");
 const currentCellHeading = document.getElementById("current-cell");
-const sheetNo = document.getElementById('sheet-no');
-const buttonContainer = document.getElementById('button-container');
+const sheetNo = document.getElementById("sheet-no");
+const buttonContainer = document.getElementById("button-container");
 
 // excel buttons
 const boldBtn = document.getElementById("bold-btn");
@@ -21,12 +21,12 @@ const underlineBtn = document.getElementById("underline-btn");
 const leftBtn = document.getElementById("left-btn");
 const centerBtn = document.getElementById("center-btn");
 const rightBtn = document.getElementById("right-btn");
-const cutBtn = document.getElementById('cut-btn');
-const copyBtn = document.getElementById('copy-btn');
-const pasteBtn = document.getElementById('paste-btn');
-const uploadInput = document.getElementById('upload-input');
-const addSheetBtn = document.getElementById('add-sheet-btn');
-const saveSheetBtn = document.getElementById('save-sheet-btn');
+const cutBtn = document.getElementById("cut-btn");
+const copyBtn = document.getElementById("copy-btn");
+const pasteBtn = document.getElementById("paste-btn");
+const uploadInput = document.getElementById("upload-input");
+const addSheetBtn = document.getElementById("add-sheet-btn");
+const saveSheetBtn = document.getElementById("save-sheet-btn");
 
 // dropdown
 const fontStyleDropdown = document.getElementById("font-style-dropdown");
@@ -42,7 +42,7 @@ let previousCell;
 let cutCell; // this cutCell will store my cell data;
 let lastPressBtn;
 let matrix = new Array(ROWS);
-let numSheets=1; // size
+let numSheets = 1; // size
 let currentSheet = 1; // index
 let prevSheet;
 
@@ -66,7 +66,7 @@ function colGen(typeOfCell, tableRow, isInnerText, rowNumber) {
     } else {
       cell.setAttribute("id", `${String.fromCharCode(col + 65)}${rowNumber}`);
       cell.setAttribute("contenteditable", true);
-      cell.addEventListener('input',updateObjectInMatrix);
+      cell.addEventListener("input", updateObjectInMatrix);
       cell.addEventListener("focus", (event) => focusHandler(event.target));
     }
     tableRow.append(cell);
@@ -95,32 +95,32 @@ function setHeaderColor(colId, rowId, color) {
 function downloadMatrix() {
   // 2d matrix into a memory that's accessible outside
   const matrixString = JSON.stringify(matrix);
-  const blob = new Blob([matrixString],{ type: 'application/json'});
+  const blob = new Blob([matrixString], { type: "application/json" });
   console.log(blob);
-  const link = document.createElement('a');
+  const link = document.createElement("a");
   link.href = URL.createObjectURL(blob);
-  link.download = 'table.json';
+  link.download = "table.json";
   link.click();
 }
 
 function uploadMatrix(event) {
   const file = event.target.files[0];
   // FileReader helps me to read my blod
-  if(file){
+  if (file) {
     const reader = new FileReader();
     reader.readAsText(file);
     // readAsText will trigger onload method
     // of reader instance
-    reader.onload = function(event){
-      const fileContent=JSON.parse(event.target.result);
+    reader.onload = function (event) {
+      const fileContent = JSON.parse(event.target.result);
       // update virtual memory
       matrix = fileContent;
       renderMatrix();
-    }
+    };
   }
 }
 
-uploadInput.addEventListener('input',uploadMatrix);
+uploadInput.addEventListener("input", uploadMatrix);
 
 function buttonHighlighter(button, styleProperty, style) {
   if (currentCell.style[styleProperty] === style) {
@@ -149,9 +149,9 @@ function focusHandler(cell) {
   previousCell = currentCell;
 }
 
-function tableBodyGen(){
+function tableBodyGen() {
   // cleanup my table body
-  tBody.innerHTML='';
+  tBody.innerHTML = "";
   for (let row = 1; row <= ROWS; row++) {
     const tr = document.createElement("tr");
     const th = document.createElement("th");
@@ -164,9 +164,8 @@ function tableBodyGen(){
 }
 tableBodyGen();
 
-
-if(localStorage.getItem(arrMatrix)){
-  matrix=JSON.parse(localStorage.getItem(arrMatrix))[0];
+if (localStorage.getItem(arrMatrix)) {
+  matrix = JSON.parse(localStorage.getItem(arrMatrix))[0];
   renderMatrix();
 }
 
@@ -238,56 +237,56 @@ fontColorInput.addEventListener("input", () => {
   updateObjectInMatrix();
 });
 
-cutBtn.addEventListener('click',()=>{
-  lastPressBtn='cut';
+cutBtn.addEventListener("click", () => {
+  lastPressBtn = "cut";
   cutCell = {
     text: currentCell.innerText,
     style: currentCell.style.cssText,
-  }
-  currentCell.innerText='';
-  currentCell.style.cssText='';
+  };
+  currentCell.innerText = "";
+  currentCell.style.cssText = "";
   updateObjectInMatrix();
-})
+});
 
-copyBtn.addEventListener('click',()=>{
-  lastPressBtn='copy';
-  cutCell={
+copyBtn.addEventListener("click", () => {
+  lastPressBtn = "copy";
+  cutCell = {
     text: currentCell.innerText,
     style: currentCell.style.cssText,
-  }
-})
+  };
+});
 
-pasteBtn.addEventListener('click',()=>{
-  currentCell.innerText=cutCell.text;
-  currentCell.style=cutCell.style;
+pasteBtn.addEventListener("click", () => {
+  currentCell.innerText = cutCell.text;
+  currentCell.style = cutCell.style;
   if (lastPressBtn === "cut") {
     cutCell = undefined;
   }
   updateObjectInMatrix();
-})
+});
 
-function genNextSheetButton(){
-  const btn = document.createElement('button');
+function genNextSheetButton() {
+  const btn = document.createElement("button");
   numSheets++;
-  currentSheet=numSheets;
-  btn.innerText=`Sheet ${currentSheet}`;
-  btn.setAttribute('id',`sheet-${currentSheet}`);
-  btn.setAttribute('onclick','viewSheet(event)');
-  btn.setAttribute('class','sheetNo');
+  currentSheet = numSheets;
+  btn.innerText = `Sheet ${currentSheet}`;
+  btn.setAttribute("id", `sheet-${currentSheet}`);
+  btn.setAttribute("onclick", "viewSheet(event)");
+  btn.setAttribute("class", "sheetNo");
   buttonContainer.append(btn);
 }
 
-addSheetBtn.addEventListener('click',()=>{
+addSheetBtn.addEventListener("click", () => {
   genNextSheetButton();
   sheetNo.innerText = `Sheet No - ${currentSheet}`;
   // add nextSheetButton
   // Save Matrix -> ✅
   saveMatrix();
   // clean matrix -> ✅
-  createNewMatrix();// it's creating matrix again (sort of used as cleaner fn)
+  createNewMatrix(); // it's creating matrix again (sort of used as cleaner fn)
   // clean html
   tableBodyGen();
-})
+});
 
 function saveMatrix() {
   if (localStorage.getItem(arrMatrix)) {
@@ -314,17 +313,17 @@ function renderMatrix() {
   });
 }
 
-function viewSheet(event){
+function viewSheet(event) {
   // save prev sheet before doing anything
-  prevSheet=currentSheet;
-  currentSheet=event.target.id.split('-')[1];
+  prevSheet = currentSheet;
+  currentSheet = event.target.id.split("-")[1];
   let matrixArr = JSON.parse(localStorage.getItem(arrMatrix));
   // save my matrix in local storage
-  matrixArr[prevSheet-1] = matrix;
-  localStorage.setItem(arrMatrix,JSON.stringify(matrixArr));
+  matrixArr[prevSheet - 1] = matrix;
+  localStorage.setItem(arrMatrix, JSON.stringify(matrixArr));
 
   // I have updated my virtual memory
-  matrix = matrixArr[currentSheet-1];
+  matrix = matrixArr[currentSheet - 1];
   // clean my html table
   tableBodyGen();
   // render the matrix in html

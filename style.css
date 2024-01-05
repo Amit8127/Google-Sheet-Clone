@@ -103,6 +103,10 @@ table {
     border-collapse: collapse;
 }
 
+table:hover {
+    cursor: default;
+}
+
 th,
 td {
     min-width: 80px;
